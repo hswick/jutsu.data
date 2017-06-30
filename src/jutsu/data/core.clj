@@ -1,4 +1,4 @@
-(ns jutsu.data
+(ns jutsu.data.core
   (:require [cheshire.core :refer [parse-string generate-string]])
   (:import [org.datavec.api.util ClassPathResource]
            [org.datavec.api.records.reader.impl.csv CSVRecordReader]
