@@ -8,7 +8,7 @@
                   (map #(take 4 %))
                   (map strings->floats)
                   clj->nd4j
-                  covariance)]
+                  (pca 2))]
      data))
 
 (defn test-split []
@@ -29,6 +29,6 @@
 (defn test-etl []
   (csv->nd4j-array "iris.csv" 4 true))
 
-(test-covar)
+(print (test-covar))
 (test-split)
 (test-etl)
