@@ -23,12 +23,11 @@
                           clj->nd4j
                           normalize-zero
                           (pca 2)))
-      (partition-by-column :labels)
-      (println)))
+      (partition-by-column :labels)))
 
 (defn test-etl []
   (csv->nd4j-array "iris.csv" 4 true))
 
-(print (test-covar))
 (test-split)
 (test-etl)
+(println (test-iris-3))
