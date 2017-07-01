@@ -3,13 +3,15 @@
 
 (set-env!
   :resource-paths #{"resources" "src"}
-  :dependencies '[[org.clojure/clojure "1.9.0-alpha15"]
+  :dependencies '[[org.clojure/clojure "1.8.0"]
                   [nightlight "1.6.5" :scope "test"]
                   [adzerk/boot-reload    "0.5.1"      :scope "test"]
                   [samestep/boot-refresh "0.1.0" :scope "test"]
+                  [adzerk/boot-test "1.2.0" :scope "test"]
+                  [hswick/jutsu "0.0.1" :scope "test"]
+                  [org.nd4j/nd4j-native-platform "0.8.0" :scope "test"]
                   [org.datavec/datavec-api "0.8.0"]
                   [org.deeplearning4j/deeplearning4j-core "0.8.0"]
-                  [org.nd4j/nd4j-native "0.8.0" :scope "test"]
                   [org.nd4j/nd4j-api "0.8.0"]
                   [cheshire "5.7.1"]])
 
@@ -24,7 +26,9 @@
 (require
   '[nightlight.boot :refer [nightlight]]
   '[adzerk.boot-reload    :refer [reload]]
-  '[samestep.boot-refresh :refer [refresh]])
+  '[samestep.boot-refresh :refer [refresh]]
+  '[adzerk.boot-test :refer :all]
+  'jutsu.data.core)
 
 (deftask build
   "Build and install the project locally"
@@ -40,7 +44,8 @@
     (reload)
     (refresh)
     (repl
-      :server true)))
+      :server true
+      :init-ns 'jutsu.data.core)))
 
 (deftask repl-client []
   (repl :client true))
@@ -49,3 +54,10 @@
   (comp
     (wait)
     (nightlight :port 4000)))
+
+(deftask testing [] (merge-env! :source-paths #{"test"}) identity)
+
+(deftask test-jutsu []
+  (comp
+    (testing)
+    (test)))

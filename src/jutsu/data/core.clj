@@ -83,7 +83,6 @@
                (seq (.next nextable)))))))
        
 ;;Gets records of strings
-
 (defn line-records [data]
   (map (fn [row] (map #(String. (.getBytes %)) row)) data))
 

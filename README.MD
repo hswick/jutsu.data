@@ -6,6 +6,8 @@ Clojure project meant to do...
 
 Run `boot night` to startup nightlight and begin editing your project in a browser.
 
+`boot test-jutsu` runs tests. Using watch doesnt work because of ND4J. 
+
 ## License
 
 Copyright © 2017 FIXME
