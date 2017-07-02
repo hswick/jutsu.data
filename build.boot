@@ -1,18 +1,17 @@
 (def project 'hswick/jutsu.data)
 (def version "0.0.1")
-
 (set-env!
   :resource-paths #{"resources" "src"}
   :dependencies '[[org.clojure/clojure "1.8.0"]
                   [adzerk/boot-reload    "0.5.1"      :scope "test"]
                   [samestep/boot-refresh "0.1.0" :scope "test"]
                   [adzerk/boot-test "1.2.0" :scope "test"]
-                  [hswick/jutsu "0.0.1"]
                   [org.nd4j/nd4j-native-platform "0.8.0" :scope "test"]
                   [org.datavec/datavec-api "0.8.0"]
                   [org.deeplearning4j/deeplearning4j-core "0.8.0"]
                   [org.nd4j/nd4j-api "0.8.0"]
                   [cheshire "5.7.1"]
+                  [hswick/jutsu "0.0.1"]
                   [nightlight "1.7.0" :scope "test"]])
 
 (task-options! pom {:project project
