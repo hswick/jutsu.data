@@ -30,4 +30,15 @@
 
 (test-split)
 (test-etl)
-(println (test-iris-3))
+
+(j/start-jutsu!)
+(Thread/sleep 3000)
+(let [iris-data (test-iris-3)]
+  (j/graph! "test-pca" (map (fn [specie]
+                              {:x (map #(jutsu-nth % 0) (:data specie))
+                               :y (map #(jutsu-nth % 1) (:data specie))
+                               :text (:labels specie)
+                               :mode "markers"
+                               :type "scatter"})    
+                         iris-data)))
+(Thread/sleep 3000)

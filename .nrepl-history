@@ -1,0 +1,18 @@
+(require '[jutsu.core :as j])
+(j/jutsu-start!)
+(j/start-jutsu!)
+(j/graph!
+  "foo"
+  [{:x [1 2 3 4]
+    :y [1 2 3 4]
+    :mode "markers"
+    :type "scatter"}])
+(j/start-jutsu!)
+(require '[jutsu.core :as j])
+(j/start-jutsu!)
+(j/graph!
+  "foo"
+  [{:x [1 2 3 4]
+    :y [1 2 3 4]
+    :mode "markers"
+    :type "scatter"}])
