@@ -55,8 +55,6 @@
                       key-list)))
       split-indexed))))
 
-(defn clj->nd4j-iterator [clj-data] (ExistingDataSetIterator. clj-data))
-
 (defn clj->json [data] (generate-string data))
 
 (defn json->clj [json-string] (parse-string json-string))
@@ -99,12 +97,12 @@
 (defn rows [coll]
   (if (instance? INDArray coll)
     (first (.shape coll))
-    (if (seq? (first coll)) (count coll) 1)))
+    (if (coll? (first coll)) (count coll) 1)))
 
 (defn cols [coll]
   (if (instance? INDArray coll)
     (second (.shape coll))
-    (if (seq? (first coll)) (count (first coll)) (count coll))))
+    (if (coll? (first coll)) (count (first coll)) (count coll))))
 
 ;;Stacks a collection of ndarrays vertically (by row)
 (defn vstack-arrays [ndarrays]
@@ -132,13 +130,13 @@
   (map #(Float/parseFloat %) string-seq))
 
 ;;Currently supports 1 and 2d arrays
-(defn clj->nd4j [coll]
+(defn clj->nd4j-array [coll]
   (let [h (rows coll) w (cols coll)]
     (if (= h 1)
       (Nd4j/create (float-array (seq coll)))
       (let [new-array (Nd4j/create h w)]
         (doseq [i (range 0 h)]
-          (.putRow new-array i (Nd4j/create (float-array (seq (nth coll i))))))
+          (.putRow new-array i (Nd4j/create (float-array (nth coll i)))))
         new-array))))
 
 ;;Best you can get is an iterator without lazy eval
@@ -154,7 +152,6 @@
        clj->nd4j))
 
 ;;Math functions and algorithms (generally nd4j specific)
-
 (defn mean [ndarray]
   (let [shape (.shape ndarray)
         nrows (first shape)

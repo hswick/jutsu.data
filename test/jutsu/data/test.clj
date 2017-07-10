@@ -42,3 +42,6 @@
                                :type "scatter"})    
                          iris-data)))
 (Thread/sleep 3000)
+
+(println (clj->nd4j-array [[1 2 3 4]
+                           [4 3 2 1]]))
