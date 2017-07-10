@@ -149,7 +149,7 @@
          (if header (rest data) data)))
        (map (fn [row]
               (map #(.toDouble %) row)))
-       clj->nd4j))
+       clj->nd4j-array))
 
 ;;Math functions and algorithms (generally nd4j specific)
 (defn mean [ndarray]
