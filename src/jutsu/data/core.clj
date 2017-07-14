@@ -150,56 +150,5 @@
               (map #(.toDouble %) row)))
        clj->nd4j-array))
 
-;;Math functions and algorithms (generally nd4j specific)
-(defn mean [ndarray]
-  (let [shape (.shape ndarray)
-        nrows (first shape)
-        ncols (second shape)
-        new-array (Nd4j/zeros 1 ncols)]
-    (doseq [i (range nrows)]
-      (.addi new-array (.getRow ndarray i)))
-    new-array))
-
-(defn nd4j-zeros [rows cols] (Nd4j/zeros rows cols))
-
-(defn covariance [ndarray]
-    (let [average (mean ndarray)
-          shape (.shape ndarray)
-          sum (Nd4j/zeros (second shape) (second shape))]
-      (doseq [i (range 0 (first shape))]
-        (let [variance (.sub (.getRow ndarray i) average)
-              row-covar (.mmul (.transpose (.dup variance)) variance)]
-          (.addi sum row-covar)))         
-      (.div sum (first shape))))
-
-(defn svd-decomp [ndarray]
-  (let [shape (.shape ndarray)
-        rows (first shape)
-        cols (second shape)
-        s (Nd4j/create (if (< rows cols) rows cols))
-        vt (Nd4j/create cols cols)]
-    (.sgesvd (.lapack (Nd4j/getBlasWrapper))
-      ndarray s nil vt)
-    {:singularvalues s :eigenvectors_transposed vt}))
-  
-(defn pca [num-dims ndarray]
-  (let [covar (covariance ndarray)
-        svd-comps (svd-decomp covar)
-        factors (->> (map-indexed (fn [i n] [n i]) (:singularvalues svd-comps))
-                     (sort-by first)
-                     reverse
-                     (take num-dims)
-                     (map (fn [[eigenvalue id]] (.getColumn (:eigenvectors_transposed svd-comps) id)))
-                     hstack-arrays)]
-    (.mmul ndarray factors)))
-
-(defn normalize-zero [ndarray]
-  (let [mn (Nd4j/mean ndarray 0)]
-    (.subiRowVector ndarray mn)
-    ndarray))
-
-(defn normalize! [ndarray]
-  (Transforms/normalizeZeroMeanAndUnitVariance ndarray))
-
 (defn get-double-from-row [ndarray row-index el-index]
   (.getDouble (.getRow ndarray row-index) 0 el-index))
