@@ -6,7 +6,6 @@
            [org.deeplearning4j.datasets.datavec RecordReaderDataSetIterator]
            [org.nd4j.linalg.factory Nd4j]
            [org.nd4j.linalg.ops.transforms Transforms]
-           [org.deeplearning4j.datasets.iterator ExistingDataSetIterator]
            [org.nd4j.linalg.api.ndarray INDArray]))
 
 ;;Thinking about making this a multimethod or part of a protocol
