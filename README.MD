@@ -1,6 +1,6 @@
 # jutsu.data
 
-Clojure project meant to experiment with data set iterators and deeplearning4j
+Clojure project meant to experiment with data set iterators and deeplearning4j. Currently a WIP
 
 # Usage
 
